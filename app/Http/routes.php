@@ -11,8 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Models\Offer;
+
+Route::get('/offers', function () {
+    return view('offers')->with(
+        [
+            'offers' => Offer::query()->latest()->paginate('40'),
+        ]
+    );
+});
+
+Route::get('/offer/{id}', function ($id) {
+    return view('offer')->with(
+        [
+            'offer' => Offer::findOrFail($id),
+        ]
+    );
 });
 
 /*

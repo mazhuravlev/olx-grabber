@@ -158,6 +158,8 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        App\Providers\LogProvider::class,
+
     ],
 
     /*
