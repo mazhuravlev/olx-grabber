@@ -1,7 +1,8 @@
 @extends('main')
 @section('content')
+    <h3>{{ $phone->id }}</h3>
     <ul>
-        @foreach($offers as $offer)
+        @foreach($phone->offers as $offer)
             <li data-id="{{ $offer->id }}" title="{{ $offer->description }}">
                 <a href="/offer/{{ $offer->id }}">
                     {{ $offer->title }}
@@ -13,6 +14,4 @@
             </li>
         @endforeach
     </ul>
-
-    {{ $offers->render() }}
 @endsection

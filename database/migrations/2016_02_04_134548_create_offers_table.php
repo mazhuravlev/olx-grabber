@@ -25,8 +25,10 @@ class CreateOffersTable extends Migration
             $table->string('date_string');
             $table->string('offer_number')->unique();
             $table->string('cat_path');
-            $table->string('phone');
+            $table->string('phones');
             $table->string('location');
+            $table->text('details')->nullable();
+            $table->timestamp('created_at_olx')->nullable();
             $table->timestamps();
         });
     }

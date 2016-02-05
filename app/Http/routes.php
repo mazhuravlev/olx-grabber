@@ -12,6 +12,11 @@
 */
 
 use App\Models\Offer;
+use App\Models\Phone;
+
+Route::get('/', function () {
+    return Redirect::to('/offers');
+});
 
 Route::get('/offers', function () {
     return view('offers')->with(
@@ -25,6 +30,22 @@ Route::get('/offer/{id}', function ($id) {
     return view('offer')->with(
         [
             'offer' => Offer::findOrFail($id),
+        ]
+    );
+});
+
+Route::get('/phones', function () {
+    return view('phones')->with(
+        [
+            'phones' => Phone::query()->latest()->paginate('40'),
+        ]
+    );
+});
+
+Route::get('/phone/{id}', function ($id) {
+    return view('phone')->with(
+        [
+            'phone' => Phone::findOrFail($id),
         ]
     );
 });
