@@ -75,6 +75,7 @@ class Kernel extends ConsoleKernel
             } while($grabbedCount > 0);
         })
             ->name('grab_links')
+            ->withoutOverlapping()
             ->everyMinute();
     }
 }
