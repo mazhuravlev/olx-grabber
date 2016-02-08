@@ -13,6 +13,7 @@
 
 use App\Models\Offer;
 use App\Models\Phone;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return Redirect::to('/offers');
@@ -49,6 +50,27 @@ Route::get('/phone/{id}', function ($id) {
         ]
     );
 });
+
+Route::group(
+    [
+        'prefix' => 'api'
+    ], function () {
+    Route::get('/offers/{timestamp?}', function ($timestamp = 0) {
+        $offers = Offer::whereDate('created_at', '>', Carbon::createFromTimestamp($timestamp))->get();
+        return response()->json($offers->toArray(), 200, [], JSON_UNESCAPED_UNICODE);
+    });
+    Route::get('/phone/{phone}/offers', function ($phone) {
+        /** @var Phone $phone */
+        $phone = Phone::findOrFail($phone);
+        return response()->json($phone->offers->toArray(), 200, [], JSON_UNESCAPED_UNICODE);
+    });
+    Route::get('/phone/{phone}/offers/count', function ($phone) {
+        /** @var Phone $phone */
+        $phone = Phone::findOrFail($phone);
+        return response()->json(['count' => $phone->offers()->count()], 200, [], JSON_UNESCAPED_UNICODE);
+    });
+}
+);
 
 /*
 |--------------------------------------------------------------------------
