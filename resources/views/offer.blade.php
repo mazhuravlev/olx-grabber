@@ -12,7 +12,10 @@
     <ul>
         @foreach($offer->phones()->get() as $phone)
             <li>
-                <a href="/phone/{{ $phone->id }}">{{ $phone->id }}</a>
+                {{ $phone->id }}
+                @if($phone->offers()->count() > 1)
+                    <a href="/phone/{{ $phone->id }}">еще {{ $phone->offers()->count() - 1 }}</a>
+                @endif
             </li>
         @endforeach
     </ul>
