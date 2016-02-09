@@ -36,6 +36,7 @@ class DetectPhones extends Job implements ShouldQueue
     {
         $phones = array_map('self::cleanPhone', $this->offer->phones);
         foreach ($phones as $phone) {
+            $phoneEntry = null;
             try {
                 $phoneEntry = Phone::firstOrCreate(
                     [
@@ -48,15 +49,17 @@ class DetectPhones extends Job implements ShouldQueue
                         'id' => $e->getPhone()
                     ]
                 );
-                return;
+                $this->release();
             }
-            try {
-                $this->offer
-                    ->phones()
-                    ->attach($phoneEntry);
-            } catch (QueryException $e) {
-                if (23000 !== intval($e->getCode())) {
-                    throw $e;
+            if ($phoneEntry) {
+                try {
+                    $this->offer
+                        ->phones()
+                        ->attach($phoneEntry);
+                } catch (QueryException $e) {
+                    if (23000 !== intval($e->getCode())) {
+                        throw $e;
+                    }
                 }
             }
         }
