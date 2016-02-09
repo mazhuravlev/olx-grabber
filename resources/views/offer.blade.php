@@ -17,7 +17,7 @@
         @endforeach
     </ul>
     </p>
-    <p>
-        {{ var_dump($offer->toArray()) }}
-    </p>
+    <pre>
+        {{ print_r($offer->toArray()) }}
+    </pre>
 @endsection
