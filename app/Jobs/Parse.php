@@ -210,7 +210,15 @@ class Parse extends Job implements ShouldQueue
 
     private static function getPhones(Client $client, $olxId)
     {
-        $response = $client->get('http://olx.ua/ajax/misc/contact/phone/' . $olxId);
+        try {
+            $response = $client->get('http://olx.ua/ajax/misc/contact/phone/' . $olxId);
+        } catch (ClientException $e) {
+            if (404 === intval($e->getCode())) {
+                return json_encode([]);
+            } else {
+                throw $e;
+            }
+        }
         $data = json_decode($response->getBody()->getContents(), true);
         if (isset($data['value'])) {
             if (strstr($data['value'], '<span')) {
