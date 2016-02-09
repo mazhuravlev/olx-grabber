@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Models\InvalidPhone;
 use App\Models\Offer;
 use App\Models\Phone;
+use App\System\InvalidPhoneFormatException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
 use Illuminate\Queue\InteractsWithQueue;
@@ -34,11 +36,20 @@ class DetectPhones extends Job implements ShouldQueue
     {
         $phones = array_map('self::cleanPhone', $this->offer->phones);
         foreach ($phones as $phone) {
-            $phoneEntry = Phone::firstOrCreate(
-                [
-                    'id' => self::validatePhone($phone)
-                ]
-            );
+            try {
+                $phoneEntry = Phone::firstOrCreate(
+                    [
+                        'id' => self::validatePhone($phone)
+                    ]
+                );
+            } catch (InvalidPhoneFormatException $e) {
+                InvalidPhone::firstOrCreate(
+                    [
+                        'id' => $e->getPhone()
+                    ]
+                );
+                return;
+            }
             try {
                 $this->offer
                     ->phones()
@@ -65,7 +76,7 @@ class DetectPhones extends Job implements ShouldQueue
         } elseif (preg_match('/^\+?(7|8)\d{10}$/', $phone)) {
             return preg_replace('/^\+?(7|8)/', '+7', $phone);
         } else {
-            throw new \Exception("invalid phone format [$phone]");
+            throw (new InvalidPhoneFormatException())->setPhone($phone);
         }
     }
 
