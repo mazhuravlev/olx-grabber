@@ -75,6 +75,10 @@ class DetectPhones extends Job implements ShouldQueue
             return $phone;
         } elseif (preg_match('/^\+?(7|8)\d{10}$/', $phone)) {
             return preg_replace('/^\+?(7|8)/', '+7', $phone);
+        } elseif (preg_match('/^9\d{9}$/', $phone)) {
+            return "+7$phone";
+        } elseif (preg_match('/^380\d{9}$/', $phone)) {
+            return "+$phone";
         } else {
             throw (new InvalidPhoneFormatException())->setPhone($phone);
         }
