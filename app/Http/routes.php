@@ -27,18 +27,22 @@ Route::get('/offers', function () {
     );
 });
 
-Route::get('/offer/{id}', function ($id) {
-    /** @var Offer $offer */
-    $offer = Offer::query()
-        ->where('id', $id)
-        ->orWhere('olx_id', $id)
-        ->first();
-    if (!$offer) {
+Route::get('/offer/olx_id/{olxId}', function ($olxId) {
+    if ($offer = Offer::where('olx_id', $olxId)->first()) {
+        return view('offer')->with(
+            [
+                'offer' => $offer,
+            ]
+        );
+    } else {
         abort(404);
     }
+});
+
+Route::get('/offer/{id}', function ($id) {
     return view('offer')->with(
         [
-            'offer' => $offer,
+            'offer' => Offer::findOrFail($id),
         ]
     );
 });
