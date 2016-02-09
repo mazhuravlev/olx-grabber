@@ -9,6 +9,6 @@ class Statistics
 {
     public function offerCount()
     {
-        return Offer::all()->count();
+        return Offer::count();
     }
 }
