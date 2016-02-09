@@ -154,6 +154,9 @@ class Parse extends Job implements ShouldQueue
             $offer->save();
             $this->dispatch((new DetectPhones($offer))->onQueue('detect_phones'));
         } catch (QueryException $e) {
+            if (23000 === intval($e->getCode())) {
+                return; // duplicate offer, finish job
+            }
             $logger->error('', self::arrayInsert($context, 'exception', $e));
             throw $e;
         }

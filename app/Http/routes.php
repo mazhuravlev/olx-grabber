@@ -28,9 +28,17 @@ Route::get('/offers', function () {
 });
 
 Route::get('/offer/{id}', function ($id) {
+    /** @var Offer $offer */
+    $offer = Offer::query()
+        ->where('id', $id)
+        ->orWhere('olx_id', $id)
+        ->first();
+    if (!$offer) {
+        abort(404);
+    }
     return view('offer')->with(
         [
-            'offer' => Offer::findOrFail($id),
+            'offer' => $offer,
         ]
     );
 });
