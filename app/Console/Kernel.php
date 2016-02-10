@@ -4,8 +4,8 @@ namespace App\Console;
 
 use App\Jobs\Parse;
 use App\Models\GrabbedUrl;
-use DB;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ServerException;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -40,15 +40,26 @@ class Kernel extends ConsoleKernel
             $page = 1;
             do {
                 $time = time();
-                $response = $client->get(sprintf($baseUrl, $page++));
-                $crawler = new Crawler($response->getBody()->getContents());
-                $urls = array_map(
-                    function ($link) {
-                        return preg_replace('/#.*$/', '', $link);
-                    },
-                    $crawler->filter('td.offer a.link')->extract('href')
-                );
-                assert(44 === count($urls));
+                $response = null;
+                try {
+                    $response = $client->get(sprintf($baseUrl, $page++));
+                } catch (ServerException $e) {
+                    Log::error('OLX server error', ['code' => $e->getCode(), 'message' => $e->getMessage()]);
+                    return;
+                }
+                $urls = [];
+                if ($response) {
+                    $crawler = new Crawler($response->getBody()->getContents());
+                    $urls = array_map(
+                        function ($link) {
+                            return preg_replace('/#.*$/', '', $link);
+                        },
+                        $crawler->filter('td.offer a.link')->extract('href')
+                    );
+                }
+                if (0 === count($urls)) {
+                    Log::info('Grabbed 0 OLX links');
+                }
                 $grabbedCount = 0;
                 $droppedCount = 0;
                 foreach ($urls as $url) {
@@ -59,20 +70,17 @@ class Kernel extends ConsoleKernel
                         $grabbedUrl->save();
                         $droppedCount++;
                     } else {
-                        $this->dispatch(
-                            new Parse(
-                                GrabbedUrl::create(
-                                    [
-                                        'url' => $url
-                                    ]
-                                )
-                            )
+                        $grabbedUrl = GrabbedUrl::create(
+                            [
+                                'url' => $url
+                            ]
                         );
+                        $this->dispatch(new Parse($grabbedUrl));
                         $grabbedCount++;
                     }
                 }
                 printf('[%d] grabbed: %d, dropped: %d' . PHP_EOL, time() - $time, $grabbedCount, $droppedCount);
-            } while($grabbedCount > 0);
+            } while ($grabbedCount > 0);
         })
             ->name('grab_links')
             ->withoutOverlapping()
