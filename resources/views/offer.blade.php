@@ -19,7 +19,9 @@
             </li>
         @endforeach
     </ul>
-    </p>
+    @foreach($offer->photos as $photo)
+        <img src="{{ $photo->url }}">
+    @endforeach
     <pre>
         {{ print_r($offer->toArray()) }}
     </pre>

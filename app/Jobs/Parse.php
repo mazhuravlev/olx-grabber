@@ -14,6 +14,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use InvalidArgumentException;
+use Mockery\CountValidator\Exception;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Parse extends Job implements ShouldQueue
@@ -159,6 +160,21 @@ class Parse extends Job implements ShouldQueue
             }
             $logger->error('', self::arrayInsert($context, 'exception', $e));
             throw $e;
+        }
+        if ($offer->wasRecentlyCreated) {
+            $photos = [];
+            try {
+                $photos = $crawler->filter('#bigGallery a')->reduce(function (Crawler $node, $i) {
+                    return (boolean)$node->attr('href');
+                })->extract('href');
+            } catch (Exception $e) {
+                $logger->error('Failed to get photos', self::arrayInsert($context, 'exception', $e));
+            }
+            if ($photos) {
+                foreach ($photos as $photo) {
+                    $offer->photos()->create(['url' => $photo]);
+                }
+            }
         }
     }
 
