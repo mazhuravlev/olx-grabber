@@ -3,7 +3,7 @@
     <ul>
         @foreach($locations as $location)
             <li data-id="{{ $location->id }}">
-                {{ $location->$location }}
+                {{ $location->location }}
             </li>
         @endforeach
     </ul>
