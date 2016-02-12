@@ -11,6 +11,7 @@
 |
 */
 
+use App\Models\Location;
 use App\Models\Offer;
 use App\Models\Phone;
 use Carbon\Carbon;
@@ -59,6 +60,14 @@ Route::get('/phone/{id}', function ($id) {
     return view('phone')->with(
         [
             'phone' => Phone::findOrFail($id),
+        ]
+    );
+});
+
+Route::get('/locations', function () {
+    return view('locations')->with(
+        [
+            'locations' => Location::all()->sortBy('location'),
         ]
     );
 });
