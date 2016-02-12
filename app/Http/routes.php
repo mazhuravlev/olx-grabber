@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\LocationController;
 use App\Models\Location;
 use App\Models\Offer;
 use App\Models\Phone;
@@ -68,6 +69,7 @@ Route::get('/locations', function () {
     return view('locations')->with(
         [
             'locations' => Location::all()->sortBy('location'),
+            'regions' => ['sev', 'simf', 'evp', 'feo'],
         ]
     );
 });
@@ -105,5 +107,13 @@ Route::group(
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
 });
+
+Route::group(
+    [
+        'prefix' => 'rest'
+    ], function () {
+    Route::resource('location', 'LocationController');
+}
+);
