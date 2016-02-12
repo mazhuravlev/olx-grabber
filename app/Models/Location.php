@@ -8,6 +8,9 @@ class Location extends Model
 {
 
     public $timestamps = false;
+    public $fillable = [
+        'location'
+    ];
 
     public function offers()
     {
