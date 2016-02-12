@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\GrabbedUrl;
+use App\Models\Location;
 use App\Models\Offer;
 use App\System\ParserLoggerInterface;
 use Carbon\Carbon;
@@ -90,9 +91,6 @@ class Parse extends Job implements ShouldQueue
                 'cat_path' => function () use ($responseHtml) {
                     return self::getCatPath($responseHtml);
                 },
-                'location' => function () use ($crawler) {
-                    return trim($crawler->filter('.show-map-link')->first()->text());
-                },
             ];
         foreach ($requiredFieldsCommands as $field => $command) {
             try {
@@ -175,8 +173,36 @@ class Parse extends Job implements ShouldQueue
                     $offer->photos()->create(['url' => $photo]);
                 }
             }
+            if ($locationString = self::getLocationString($crawler)) {
+                if ($location = Location::where('location', $locationString)->first()) {
+                    $offer->location()->associate($location);
+                    $offer->save();
+                } else {
+                    try {
+                        $location = Location::create([
+                            'location' => $locationString
+                        ]);
+                    } catch (QueryException $e) {
+                        $logger->error('Unable to create Location', self::arrayInsert($context, 'location', $locationString));
+                    }
+                    if ($location instanceof Location) {
+                        $offer->location()->associate($location);
+                        $offer->save();
+                    }
+                }
+            }
         }
     }
+
+    private static function getLocationString(Crawler $crawler)
+    {
+        try {
+            return trim($crawler->filter('.show-map-link')->first()->text());
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
 
     private static function parseDate($dateString)
     {

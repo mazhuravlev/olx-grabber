@@ -39,4 +39,9 @@ class Offer extends Model
         return $this->hasMany(InvalidPhone::class);
     }
 
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
 }
