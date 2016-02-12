@@ -13,7 +13,9 @@ class CreateInvalidPhonesTable extends Migration
     public function up()
     {
         Schema::create('invalid_phones', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->increments('id');
+            $table->string('phone');
+            $table->unsignedInteger('offer_id');
         });
     }
 

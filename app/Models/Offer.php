@@ -34,5 +34,9 @@ class Offer extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function invalidPhones()
+    {
+        return $this->hasMany(InvalidPhone::class);
+    }
 
 }

@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class InvalidPhone extends Model
 {
 
-    public $incrementing = false;
     public $timestamps = false;
     public $fillable = [
-        'id',
+        'phone'
     ];
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
 
 }

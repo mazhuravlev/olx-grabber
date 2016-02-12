@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\InvalidPhone;
 use App\Models\Offer;
 use App\Models\Phone;
 use App\System\InvalidPhoneFormatException;
@@ -40,13 +39,13 @@ class DetectPhones extends Job implements ShouldQueue
             try {
                 $phoneEntry = Phone::firstOrCreate(
                     [
-                        'id' => self::validatePhone($phone)
+                        'id' => self::validatePhone($phone),
                     ]
                 );
             } catch (InvalidPhoneFormatException $e) {
-                InvalidPhone::firstOrCreate(
+                $this->offer->invalidPhones()->firstOrCreate(
                     [
-                        'id' => $e->getPhone()
+                        'phone' => $e->getPhone(),
                     ]
                 );
                 $this->release();

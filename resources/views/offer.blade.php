@@ -9,6 +9,8 @@
         {{ $offer->description }}
     </p>
     <p>
+        @if($offer->phones()->count() > 0)
+            Телефоны:
     <ul>
         @foreach($offer->phones()->get() as $phone)
             <li>
@@ -19,6 +21,16 @@
             </li>
         @endforeach
     </ul>
+    @endif
+    @if($offer->invalidPhones()->count() >  0)
+        Нераспознанные телефоны:
+        <ul>
+            @foreach($offer->invalidPhones()->get() as $invalidPhone)
+                <li>{{ $invalidPhone->phone }}</li>
+            @endforeach
+        </ul>
+    @endif
+
     @foreach($offer->photos as $photo)
         <img src="{{ $photo->url }}">
     @endforeach
