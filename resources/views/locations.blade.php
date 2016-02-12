@@ -7,6 +7,4 @@
             </li>
         @endforeach
     </ul>
-
-    {{ $locations->render() }}
 @endsection

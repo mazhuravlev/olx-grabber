@@ -8,7 +8,8 @@
     }
 </script>
 <ul>
-    <li><a href="/offers">offers</a></li>
-    <li><a href="/phones">phones</a></li>
+    <li><a href="/offers">Offers</a></li>
+    <li><a href="/phones">Phones</a></li>
+    <li><a href="/phones">Locations</a></li>
 </ul>
 @yield('content')
