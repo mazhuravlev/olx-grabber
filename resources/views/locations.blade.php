@@ -40,9 +40,6 @@
     <script>
         $('select[data-behavior="update-location"]').change(function () {
             var $this = $(this);
-            if (!$this.val()) {
-                return;
-            }
             $.ajax({
                 method: 'post',
                 url: '/rest/location/' + $this.data('id'),
