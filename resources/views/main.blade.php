@@ -10,6 +10,6 @@
 <ul>
     <li><a href="/offers">Offers</a></li>
     <li><a href="/phones">Phones</a></li>
-    <li><a href="/phones">Locations</a></li>
+    <li><a href="/locations">Locations</a></li>
 </ul>
 @yield('content')
