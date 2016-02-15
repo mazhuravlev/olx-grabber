@@ -7,12 +7,13 @@ use App\Models\Phone;
 use App\System\InvalidPhoneFormatException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 class DetectPhones extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+    use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     private $offer;
 
@@ -50,11 +51,12 @@ class DetectPhones extends Job implements ShouldQueue
                 );
                 $this->release();
             }
-            if ($phoneEntry) {
+            if ($phoneEntry instanceof Phone) {
                 try {
                     $this->offer
                         ->phones()
                         ->attach($phoneEntry);
+                    $this->dispatch(new UpdatePhoneOfferCount($phoneEntry));
                 } catch (QueryException $e) {
                     if (23000 !== intval($e->getCode())) {
                         throw $e;
