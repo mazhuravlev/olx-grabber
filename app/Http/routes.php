@@ -52,7 +52,7 @@ Route::get('/offer/{id}', function ($id) {
 Route::get('/phones', function () {
     return view('phones')->with(
         [
-            'phones' => Phone::query()->latest()->paginate('40'),
+            'phones' => Phone::query()->orderBy('offer_count', 'desc')->paginate('40'),
         ]
     );
 });
