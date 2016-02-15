@@ -31,10 +31,7 @@ class UpdatePhoneOfferCount extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->phone->save(
-            [
-                'offer_count' => $this->phone->offers()->count()
-            ]
-        );
+        $this->phone->offer_count = $this->phone->offers()->count();
+        $this->phone->save();
     }
 }
