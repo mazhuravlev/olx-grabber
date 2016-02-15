@@ -56,7 +56,9 @@ class DetectPhones extends Job implements ShouldQueue
                     $this->offer
                         ->phones()
                         ->attach($phoneEntry);
-                    $this->dispatch(new UpdatePhoneOfferCount($phoneEntry));
+                    $this->dispatch(
+                        (new UpdatePhoneOfferCount($phoneEntry))->onQueue('update_phone_offer_count')
+                    );
                 } catch (QueryException $e) {
                     if (23000 !== intval($e->getCode())) {
                         throw $e;
