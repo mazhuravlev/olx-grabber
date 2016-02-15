@@ -85,6 +85,18 @@ return [
             'prefix'   => '',
         ],
 
+        'grabber' => [
+            'driver'    => 'mysql',
+            'host'      => env('GRABBER_DB_HOST', 'localhost'),
+            'database'  => env('GRABBER_DB_DATABASE', 'forge'),
+            'username'  => env('GRABBER_DB_USERNAME', 'forge'),
+            'password'  => env('GRABBER_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
     ],
 
     /*
