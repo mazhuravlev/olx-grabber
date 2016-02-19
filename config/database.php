@@ -85,11 +85,59 @@ return [
             'prefix'   => '',
         ],
 
-        'grabber' => [
+        'grabber_sev' => [
             'driver'    => 'mysql',
             'host'      => env('GRABBER_DB_HOST', 'localhost'),
-            'database'  => env('GRABBER_DB_DATABASE', 'forge'),
-            'username'  => env('GRABBER_DB_USERNAME', 'forge'),
+            'database' => 'grabber',
+            'username' => env('GRABBER_DB_USERNAME', ''),
+            'password' => env('GRABBER_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'grabber_simf' => [
+            'driver' => 'mysql',
+            'host' => env('GRABBER_DB_HOST', 'localhost'),
+            'database' => 'grabber_symph',
+            'username' => env('GRABBER_DB_USERNAME', ''),
+            'password' => env('GRABBER_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'grabber_ubk' => [
+            'driver' => 'mysql',
+            'host' => env('GRABBER_DB_HOST', 'localhost'),
+            'database' => 'grabber_ubk',
+            'username' => env('GRABBER_DB_USERNAME', ''),
+            'password' => env('GRABBER_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'grabber_evp' => [
+            'driver' => 'mysql',
+            'host' => env('GRABBER_DB_HOST', 'localhost'),
+            'database' => 'grabber_evp',
+            'username' => env('GRABBER_DB_USERNAME', ''),
+            'password' => env('GRABBER_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'grabber_feo' => [
+            'driver' => 'mysql',
+            'host' => env('GRABBER_DB_HOST', 'localhost'),
+            'database' => 'grabber_feo',
+            'username' => env('GRABBER_DB_USERNAME', ''),
             'password'  => env('GRABBER_DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',

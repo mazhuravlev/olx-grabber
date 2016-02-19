@@ -77,4 +77,13 @@ class Categories
             'prodazha-zemli/prodazha-zemli-selskohozyaystvennogo-naznacheniya' => self::CAT_LAND_DACHA,
         ];
 
+    public static function getCat($catString)
+    {
+        if (array_key_exists($catString, self::$cats)) {
+            return self::$cats[$catString];
+        } else {
+            throw new UnknownCategoryException($catString);
+        }
+    }
+
 }
