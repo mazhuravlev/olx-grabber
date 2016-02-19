@@ -58,6 +58,10 @@ class ExportOffer extends Job implements ShouldQueue
      */
     public function handle()
     {
+        if (0 === $this->offer->phones()->count()) {
+            echo "offer {$this->offer->olx_id} has no phones\n";
+            return;
+        }
         if ($location = $this->offer->location()->first() and $region = $location->region and $this->offer->phones()->count() > 0) {
             $connection = DB::connection('grabber_' . $region);
             foreach ($this->offer->phones()->get() as $phone) {
