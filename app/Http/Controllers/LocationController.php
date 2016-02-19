@@ -72,11 +72,9 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        if (!$region = $request->get('region')) {
-            abort(400);
-        }
-        $location->region = $region;
+        $location->region = $request->get('region');
         $location->save();
+        return response()->json($location->toArray());
     }
 
     /**

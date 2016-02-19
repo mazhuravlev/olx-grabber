@@ -12,6 +12,7 @@
     <table>
         <thead>
         <tr>
+            <th>id</th>
             <th>count</th>
             <th>location</th>
             <th>region</th>
@@ -20,12 +21,15 @@
         <tbody>
         @foreach($locations as $location)
             <tr>
-                <td>{{ $location->offers()->count() }}</td>
+                <td>{{ $location->id }}</td>
+                <td>
+                    {{--{{ $location->offers()->count() }}--}}
+                </td>
                 <td>{{ $location->location }}</td>
                 <td>
                     <select data-behavior="update-location" data-id="{{ $location->id }}">
+                        <option></option>
                         @foreach($regions as $region)
-                            <option></option>
                             <option
                                     @if($region === $location->region) selected @endif
                             >{{ $region }}</option>
