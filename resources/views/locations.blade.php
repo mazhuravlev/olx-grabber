@@ -40,7 +40,6 @@
         @endforeach
         </tbody>
     </table>
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script>
         $('select[data-behavior="update-location"]').change(function () {
             var $this = $(this);

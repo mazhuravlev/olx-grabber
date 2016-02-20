@@ -9,7 +9,7 @@ class DetailsValue extends Model
 
     public $timestamps = false;
     public $fillable = [
-        'value'
+        'value', 'export_value'
     ];
 
     public function detailsParameter()

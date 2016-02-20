@@ -94,6 +94,31 @@ Route::group(
 }
 );
 
+Route::group(
+    [
+        'prefix' => 'details'
+    ],
+    function () {
+        Route::get('/', function () {
+            return view('details')->with(
+                [
+                    'detailsParameters' => \App\Models\DetailsParameter::all(),
+                ]
+            );
+        });
+        Route::get('/{id}', function ($id) {
+            /** @var \App\Models\DetailsParameter $detailsParameter */
+            $detailsParameter = \App\Models\DetailsParameter::findOrFail($id);
+            return view('details_parameter')->with(
+                [
+                    'detailsParameter' => $detailsParameter,
+                    'detailsValues' => $detailsParameter->detailsValues()->get(),
+                ]
+            );
+        });
+    }
+);
+
 
 Route::group(
     [
@@ -147,5 +172,7 @@ Route::group(
         'prefix' => 'rest'
     ], function () {
     Route::resource('location', 'LocationController');
+    Route::resource('details_parameter', 'DetailsParameterController');
+    Route::resource('details_parameter.details_value', 'DetailsValueController');
 }
 );
