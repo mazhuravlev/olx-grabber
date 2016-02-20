@@ -16,7 +16,8 @@ class Offer extends Model
 
     public function getDetailsAttribute($value)
     {
-        return json_decode($value, true);
+        $details = json_decode($value, true);
+        return is_array($details) ? $details : [$details];
     }
 
     public function setDetailsAttribute($value)
