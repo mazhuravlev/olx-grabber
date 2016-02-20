@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ParseDetailsParameters;
 use App\Jobs\Parse;
 use App\Models\GrabbedUrl;
 use GuzzleHttp\Client;
@@ -23,7 +24,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // Commands\Inspire::class,
+        ParseDetailsParameters::class,
     ];
 
     /**
