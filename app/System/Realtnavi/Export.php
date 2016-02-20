@@ -3,6 +3,7 @@
 namespace App\System\Realtnavi;
 
 
+use App\Models\DetailsParameter;
 use App\Models\Offer;
 
 class Export
@@ -25,11 +26,28 @@ class Export
             'phone' => self::getPhones($offer),
         ];
         $details = $offer->details;
-        if (is_array($details) and array_key_exists('Объявление от', $details) and 'Бизнес' == $details['Объявление от']) {
+        if (array_key_exists('Объявление от', $details) and 'Бизнес' == $details['Объявление от']) {
             $result['_agent'] = true;
         }
-
+        foreach ($details as $parameter => $value) {
+            /** @var DetailsParameter $detailParameter */
+            $detailParameter = DetailsParameter::query()
+                ->where('parameter', $parameter)
+                ->first();
+            if ($detailParameter and $detailParameter->export_property) {
+                if ($detailParameter->is_integer_field) {
+                    $result[$detailParameter->export_property] = self::extractInteger($value);
+                } elseif ($detailValue = $detailParameter->detailsValues()->where('value', $value)->first() and $detailValue->export_value) {
+                    $result[$detailParameter->export_property] = $detailValue->export_value;
+                }
+            }
+        }
         return $result;
+    }
+
+    private static function extractInteger($value)
+    {
+        return intval(preg_replace('/\s*/', '', $value));
     }
 
     private static function getLocation(Offer $offer)
