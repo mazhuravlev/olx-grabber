@@ -15,9 +15,14 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    function index()
     {
-        //
+        return view('locations')->with(
+            [
+                'locations' => Location::all()->sortBy('location'),
+                'regions' => ['sev', 'simf', 'evp', 'feo'],
+            ]
+        );
     }
 
     /**
