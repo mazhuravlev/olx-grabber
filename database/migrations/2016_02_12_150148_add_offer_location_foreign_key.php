@@ -25,7 +25,7 @@ class AddOfferLocationForeignKey extends Migration
     public function down()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->dropForeign('');
+            $table->dropForeign('offer_location_fk');
         });
     }
 }
