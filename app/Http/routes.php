@@ -47,6 +47,18 @@ Route::group(
 
 Route::group(
     [
+        'prefix' => 'log',
+        'middleware' => ['web', 'auth']
+
+    ],
+    function () {
+        Route::get('/', 'LogController@index');
+        Route::post('/truncate', 'LogController@truncate');
+    }
+);
+
+Route::group(
+    [
         'prefix' => 'rest',
         'middleware' => ['web', 'auth']
     ], function () {

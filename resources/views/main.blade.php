@@ -19,6 +19,7 @@
     <li><a href="/locations">Locations</a></li>
     <li><a href="/export">Export</a></li>
     <li><a href="/details">Details</a></li>
+    <li><a href="/log">Log</a></li>
 </ul>
 @yield('content')
 </body>
