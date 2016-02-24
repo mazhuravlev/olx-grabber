@@ -3,16 +3,17 @@
 Route::get('/', function () {
     return Redirect::to('/offers');
 });
-Route::get('/offers', 'OfferController@index');
-Route::get('/offer/olx_id/{olxId}', 'OfferController@findByOlxId');
-Route::get('/offer/{id}', 'OfferController@offer');
-Route::get('/phones', 'PhoneController@index');
-Route::get('/phone/{id}', 'PhoneController@phone');
-Route::get('/locations', 'LocationController@index');
+Route::get('/offers', 'OfferController@index')->middleware(['web', 'auth']);
+Route::get('/offer/olx_id/{olxId}', 'OfferController@findByOlxId')->middleware(['web', 'auth']);
+Route::get('/offer/{id}', 'OfferController@offer')->middleware(['web', 'auth']);
+Route::get('/phones', 'PhoneController@index')->middleware(['web', 'auth']);
+Route::get('/phone/{id}', 'PhoneController@phone')->middleware(['web', 'auth']);
+Route::get('/locations', 'LocationController@index')->middleware(['web', 'auth']);
 
 Route::group(
     [
-        'prefix' => 'api'
+        'prefix' => 'api',
+        'middleware' => ['web', 'auth']
     ],
     function () {
         Route::get('/offers/{timestamp?}', 'ApiController@offers');
@@ -23,7 +24,8 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'details'
+        'prefix' => 'details',
+        'middleware' => ['web', 'auth']
     ],
     function () {
         Route::get('/', 'DetailsController@index');
@@ -33,7 +35,9 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'export'
+        'prefix' => 'export',
+        'middleware' => ['web', 'auth']
+
     ],
     function () {
         Route::get('/', 'ExportController@index');
@@ -43,7 +47,8 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'rest'
+        'prefix' => 'rest',
+        'middleware' => ['web', 'auth']
     ], function () {
     Route::resource('location', 'LocationController');
     Route::resource('details_parameter', 'DetailsParameterController');
