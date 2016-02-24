@@ -10,7 +10,7 @@
             @endforeach
         </ul>
         <label for="day-count">export offers X last days</label>
-        <p><input id="day-count" name="day_count" type="number" value="1"></p>
+        <p><input id="day-count" name="day_count" type="number" value="1" step="any"></p>
         <button type="submit">export</button>
     </form>
 @endsection
