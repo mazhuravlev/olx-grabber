@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -12,7 +13,7 @@ class ExportController extends Controller
     function index()
     {
         return view('export')->with([
-            'regions' => ['sev', 'simf', 'evp', 'ubk', 'feo'],
+            'regions' => Region::all(),
         ]);
     }
 

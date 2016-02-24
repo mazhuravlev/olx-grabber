@@ -31,8 +31,8 @@
                         <option></option>
                         @foreach($regions as $region)
                             <option
-                                    @if($region === $location->region) selected @endif
-                            >{{ $region }}</option>
+                                    @if($region->id === $location->region) selected @endif
+                            >{{ $region->id }}</option>
                         @endforeach
                     </select>
                 </td>

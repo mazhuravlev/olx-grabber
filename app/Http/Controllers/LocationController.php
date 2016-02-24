@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\Region;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class LocationController extends Controller
 {
@@ -20,7 +19,7 @@ class LocationController extends Controller
         return view('locations')->with(
             [
                 'locations' => Location::all()->sortBy('location'),
-                'regions' => ['sev', 'simf', 'evp', 'feo'],
+                'regions' => Region::all(),
             ]
         );
     }

@@ -4,8 +4,8 @@
         <ul>
             @foreach($regions as $region)
                 <li>
-                    <label for="region_{{ $region }}">{{ $region }}</label>
-                    <input id="region_{{ $region }}" type="checkbox" name="regions[]" value="{{ $region }}">
+                    <label for="region_{{ $region->id }}">{{ $region->id }}</label>
+                    <input id="region_{{ $region->id }}" type="checkbox" name="regions[]" value="{{ $region->id }}">
                 </li>
             @endforeach
         </ul>
