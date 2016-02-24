@@ -30,7 +30,7 @@ class CreateOffersTable extends Migration
             $table->text('details')->nullable();
             $table->timestamp('created_at_olx')->nullable();
             $table->timestamps();
-            $table->unsignedInteger('location_id');
+            $table->unsignedInteger('location_id')->nullable();
         });
     }
 
