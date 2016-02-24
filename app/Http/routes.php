@@ -176,3 +176,15 @@ Route::group(
     Route::resource('details_parameter.details_value', 'DetailsValueController');
 }
 );
+
+Route::group(
+    [
+        'prefix' => 'auth',
+        'middleware' => ['web']
+    ],
+    function () {
+        Route::get('login', 'Auth\AuthController@getLogin');
+        Route::post('login', 'Auth\AuthController@postLogin');
+        Route::get('logout', 'Auth\AuthController@getLogout');
+    }
+);
