@@ -7,7 +7,7 @@
     </style>
 
     <div class="action">
-        <form action="./truncate" method="post">
+        <form action="/log/truncate" method="post">
             <button type="submit">Truncate log to 0 bytes!</button>
         </form>
     </div>
