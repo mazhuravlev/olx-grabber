@@ -53,6 +53,7 @@ Route::group(
     ],
     function () {
         Route::get('/', 'LogController@index');
+        Route::post('/', 'LogController@file');
         Route::post('/truncate', 'LogController@truncate');
     }
 );
