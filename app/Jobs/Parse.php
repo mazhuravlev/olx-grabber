@@ -143,7 +143,7 @@ class Parse extends Job implements ShouldQueue
         if ($details) {
             $offer->details = $details;
         }
-        if ($failedFields) {
+        if ($failedFields and $failedFields !== ["price_string"]) { // lots of offers don't have assigned price
             $logger->warning('Failed fields', self::arrayInsert($context, 'failed_fields', $failedFields));
         }
         if ($olxTimestamp = self::parseDate($offer->date_string)) {
