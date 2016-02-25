@@ -13,7 +13,7 @@
             <label for="file">File:</label>
             <select id="file" name="file">
                 @foreach($files as $file)
-                    <option>{{ $file }}</option>
+                    <option value="{{ $file['file'] }}">{{ $file['file'] }}: {{ $file['size'] }}</option>
                 @endforeach
             </select>
             <button type="submit">View!</button>

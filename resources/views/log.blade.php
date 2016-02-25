@@ -16,7 +16,14 @@
         <form method="post">
             <label for="lines-count">Lines count</label>
             <input id="lines-count" name="lines" type="number" value="100">
-            <input type="hidden" name="file" value="{{ $file }}">
+            <label for="file">File:</label>
+            <select id="file" name="file">
+                @foreach($files as $_file)
+                    <option @if($_file['file'] === $file) selected @endif value="{{ $_file['file'] }}">
+                        {{ $_file['file'] }}: {{ $_file['size'] }}
+                    </option>
+                @endforeach
+            </select>
             <button type="submit">View log!</button>
         </form>
     </div>
