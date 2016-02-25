@@ -13,7 +13,7 @@ class RegionsSeeder extends Seeder
     public function run()
     {
         $regions = [
-            'sev', 'simf', 'ubk', 'evp', 'feo'
+            '', '---', 'sev', 'simf', 'ubk', 'evp', 'feo'
         ];
 
         foreach ($regions as $region) {

@@ -18,7 +18,7 @@ class LocationController extends Controller
     {
         return view('locations')->with(
             [
-                'locations' => Location::all()->sortBy('location'),
+                'locations' => Location::all()->sortBy('region'),
                 'regions' => Region::all(),
             ]
         );

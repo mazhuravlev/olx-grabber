@@ -28,7 +28,6 @@
                 <td>{{ $location->location }}</td>
                 <td>
                     <select data-behavior="update-location" data-id="{{ $location->id }}">
-                        <option></option>
                         @foreach($regions as $region)
                             <option
                                     @if($region->id === $location->region) selected @endif

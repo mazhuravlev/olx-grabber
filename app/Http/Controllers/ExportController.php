@@ -13,7 +13,7 @@ class ExportController extends Controller
     function index()
     {
         return view('export')->with([
-            'regions' => Region::all(),
+            'regions' => Region::where('id', '<>', '---')->get(),
         ]);
     }
 
