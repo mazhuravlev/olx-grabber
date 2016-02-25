@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Events\OfferParsed;
 use App\Models\Offer;
 use App\Models\Phone;
 use App\System\InvalidPhoneFormatException;
+use Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -65,6 +67,7 @@ class DetectPhones extends Job implements ShouldQueue
                     }
                 }
             }
+            Event::fire(new OfferParsed($this->offer));
         }
     }
 
