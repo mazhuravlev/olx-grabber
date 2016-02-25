@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Events\OfferParsed;
 use App\Models\GrabbedUrl;
 use App\Models\Location;
 use App\Models\Offer;
 use App\System\ParserLoggerInterface;
 use Carbon\Carbon;
+use Event;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -151,13 +153,20 @@ class Parse extends Job implements ShouldQueue
         }
         try {
             $offer->save();
-            $this->dispatch((new DetectPhones($offer))->onQueue('detect_phones'));
         } catch (QueryException $e) {
             if (23000 === intval($e->getCode())) {
                 return; // duplicate offer, finish job
             }
             $logger->error('', self::arrayInsert($context, 'exception', $e));
             throw $e;
+        }
+        if ($offer) {
+            try {
+                $detectPhones = new DetectPhones($offer);
+                $detectPhones->handle();
+            } catch (\Exception $e) {
+                \Log::critical('Failed to detect phones', ['exception' => $e]);
+            }
         }
         if ($offer->wasRecentlyCreated) {
             $photos = [];
@@ -192,6 +201,7 @@ class Parse extends Job implements ShouldQueue
                 }
             }
         }
+        Event::fire(new OfferParsed($offer));
     }
 
     private static function getLocationString(Crawler $crawler)
