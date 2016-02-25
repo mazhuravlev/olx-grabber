@@ -7,6 +7,7 @@ Route::get('/offers', 'OfferController@index')->middleware(['web', 'auth']);
 Route::get('/offer/olx_id/{olxId}', 'OfferController@findByOlxId')->middleware(['web', 'auth']);
 Route::get('/offer/{id}', 'OfferController@offer')->middleware(['web', 'auth']);
 Route::get('/phones', 'PhoneController@index')->middleware(['web', 'auth']);
+Route::get('/phones/invalid', 'PhoneController@invalid')->middleware(['web', 'auth']);
 Route::get('/phone/{id}', 'PhoneController@phone')->middleware(['web', 'auth']);
 Route::get('/locations', 'LocationController@index')->middleware(['web', 'auth']);
 
@@ -19,7 +20,7 @@ Route::group(
         Route::get('/offers/{timestamp?}', 'ApiController@offers');
         Route::get('/phone/{phone}/offers', 'ApiController@offersByPhone');
         Route::get('/phone/{phone}/offers/count', 'ApiController@countByPhone');
-}
+    }
 );
 
 Route::group(

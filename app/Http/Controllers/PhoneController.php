@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvalidPhone;
 use App\Models\Phone;
-use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class PhoneController extends Controller
@@ -22,6 +22,15 @@ class PhoneController extends Controller
         return view('phone')->with(
             [
                 'phone' => Phone::findOrFail($id),
+            ]
+        );
+    }
+
+    function invalid()
+    {
+        return view('invalid_phones')->with(
+            [
+                'phones' => InvalidPhone::all()->sortBy('phone')
             ]
         );
     }

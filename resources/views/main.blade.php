@@ -16,6 +16,7 @@
 <ul>
     <li><a href="/offers">Offers</a></li>
     <li><a href="/phones">Phones</a></li>
+    <li><a href="/phones/invalid">Invalid phones</a></li>
     <li><a href="/locations">Locations</a></li>
     <li><a href="/export">Export</a></li>
     <li><a href="/details">Details</a></li>
