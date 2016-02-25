@@ -37,9 +37,10 @@ class OfferExportListener
                 (new ExportOffer($offer))
                     ->onQueue('export_offers')
             );
-            Log::info('created export job for offer', ['olx_id' => $offer->olx_id]);
+            Log::info('Created export job for offer', ['olx_id' => $offer->olx_id]);
+        } else {
+            Log::info('Offer not exported, has no region', ['olx_id' => $offer->olx_id]);
         }
-        Log::info('Offer not exported, has no region', ['olx_id' => $offer->olx_id]);
     }
 }
 
