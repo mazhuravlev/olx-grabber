@@ -52,7 +52,7 @@ class Export
 
     private static function getLocation(Offer $offer)
     {
-        if ($location = $offer->location()->first()) {
+        if ($location = $offer->location) {
             return $location->location;
         } else {
             return null;

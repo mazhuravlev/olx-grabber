@@ -6,6 +6,14 @@
         </a>
     </p>
     <p>
+        Местоположение:
+        @if($offer->location)
+            {{ $offer->location->location }} ({{ $offer->location->region }})
+        @else
+            не определено
+        @endif
+    </p>
+    <p>
         {{ $offer->description }}
     </p>
     <p>

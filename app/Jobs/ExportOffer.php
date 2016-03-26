@@ -76,7 +76,7 @@ class ExportOffer extends Job implements ShouldQueue
                 return;
             }
             if ($this->inAnyTable($connection, $this->offer->olx_id, ['adDetails', 'adDeleted', 'adDontShow', 'adDuplicates'])) {
-                echo 'offer exists in db: ' . $this->offer->olx_id . PHP_EOL;
+                echo "offer exists in db ($region): " . $this->offer->olx_id . PHP_EOL;
                 return;
             }
             $offerId = null;
@@ -102,7 +102,7 @@ class ExportOffer extends Job implements ShouldQueue
                 Log::critical('Failed to insert offer', (array)$this->offer);
                 $this->release(100);
             } else {
-                echo "offer inserted to db: $offerId\n";
+                echo $this->offer->olx_id . " offer inserted to db: $offerId ($region)\n";
             }
             foreach ($this->offer->photos()->get() as $photo) {
                 $connection->table('adImages')

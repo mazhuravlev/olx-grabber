@@ -28,7 +28,7 @@ class ExportController extends Controller
         $dispatcher = app('Illuminate\Bus\Dispatcher');
         foreach ($offers as $offer) {
             /** @var Offer $offer */
-            if ($location = $offer->location()->first() and in_array($location->region, $regions, true)) {
+            if ($location = $offer->location and in_array($location->region, $regions, true)) {
                 $dispatcher->dispatch(
                     (new \App\Jobs\ExportOffer($offer))
                         ->onQueue('export_offers')

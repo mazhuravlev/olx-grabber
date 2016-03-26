@@ -31,7 +31,7 @@ class OfferExportListener
     public function handle(OfferParsed $event)
     {
         $offer = $event->offer;
-        $region = $offer->location()->first() ? $offer->location()->first()->region : null;
+        $region = $offer->location ? $offer->location->region : null;
         if ($region and '---' !== $region) {
             $this->dispatch(
                 (new ExportOffer($offer))
