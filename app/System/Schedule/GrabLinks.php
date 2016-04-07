@@ -19,6 +19,7 @@ class GrabLinks
         $client = new Client();
         $baseUrl = 'http://olx.ua/nedvizhimost/cri/?page=%d';
         $page = 1;
+        $retryCount = 5;
         do {
             $time = time();
             $response = null;
@@ -46,6 +47,7 @@ class GrabLinks
             /** @var Dispatcher $dispatcher */
             $dispatcher = app('Illuminate\Bus\Dispatcher');
             foreach ($urls as $url) {
+                /** @var GrabbedUrl $grabbedUrl */
                 $grabbedUrl = GrabbedUrl::where('url', $url)->first();
                 if ($grabbedUrl) {
                     /** @var GrabbedUrl $grabbedUrl */
@@ -63,7 +65,7 @@ class GrabLinks
                 }
             }
             printf('[%d] grabbed: %d, dropped: %d' . PHP_EOL, time() - $time, $grabbedCount, $droppedCount);
-        } while ($grabbedCount > 0);
+        } while ($grabbedCount > 0 or $retryCount-- > 0);
     }
 
 }
