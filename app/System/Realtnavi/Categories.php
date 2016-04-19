@@ -75,6 +75,7 @@ class Categories
             'prodazha-zemli/prodazha-zemli-pod-sad-ogorod' => self::CAT_LAND_DACHA,
             'prodazha-zemli/prodazha-zemli-promyshlennogo-naznacheniya' => self::CAT_LAND_DACHA,
             'prodazha-zemli/prodazha-zemli-selskohozyaystvennogo-naznacheniya' => self::CAT_LAND_DACHA,
+            'prodazha-pomescheniy/prodazha-maf' => self::CAT_COMMERCIAL_SALE,
         ];
 
     public static function getCat($catString)
