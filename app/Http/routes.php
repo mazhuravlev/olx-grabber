@@ -46,18 +46,7 @@ Route::group(
     }
 );
 
-Route::group(
-    [
-        'prefix' => 'log',
-        'middleware' => ['web', 'auth']
-
-    ],
-    function () {
-        Route::get('/', 'LogController@index');
-        Route::post('/', 'LogController@file');
-        Route::post('/truncate', 'LogController@truncate');
-    }
-);
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::group(
     [
