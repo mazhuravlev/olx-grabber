@@ -1,10 +1,22 @@
 @extends('main')
 @section('content')
     <p>
+        Ссылка на оригинал:
         <a href="{{ $offer->href }}">
             {{ $offer->title }}
         </a>
     </p>
+    <form action="/offer/{{ $offer->id }}/export" method="post">
+        <button type="submit"
+                @if(!$offer->location)
+                disabled
+                @endif
+        >Экспортировать
+            @if($offer->location)
+                : {{ $offer->location->region }}
+            @endif
+        </button>
+    </form>
     <p>
         Местоположение:
         @if($offer->location)

@@ -17,6 +17,13 @@ class ExportController extends Controller
         ]);
     }
 
+    function offer(Offer $offer)
+    {
+        $job = new \App\Jobs\ExportOffer($offer);
+        $job->handle();
+        return response('');
+    }
+
     function export(Request $request)
     {
         $regions = $request->get('regions');
