@@ -43,7 +43,7 @@ class ExportOffer extends Job implements ShouldQueue
                     );
                 $count++;
             } catch (QueryException $e) {
-                if (23000 !== intval($e->getCode())) {
+                if ('23000' === $e->getCode() and 1062 === $e->errorInfo[1]) {
                     throw $e;
                 }
             }
@@ -90,7 +90,7 @@ class ExportOffer extends Job implements ShouldQueue
             try {
                 $offerId = $connection->table('adDetails')->insertGetId($exportedOffer);
             } catch (QueryException $e) {
-                if (23000 === intval($e->getCode())) {
+                if ('23000' === $e->getCode() and 1062 === $e->errorInfo[1]) {
                     echo 'offer exists in db (duplicate key error): ' . $this->offer->olx_id . PHP_EOL;
                     return;
                 } else {
