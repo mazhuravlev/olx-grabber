@@ -79,7 +79,7 @@ class Export
         if ($photo = $offer->photos()->first()) {
             return $photo->url;
         } else {
-            return null;
+            return '';
         }
     }
 
