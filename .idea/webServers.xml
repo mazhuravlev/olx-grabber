@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3f1096ed-64e6-4d51-97f6-a1f285eb2988" name="realtnavi" url="http://olx.realtnavi.ru">
+        <fileTransfer host="olx.realtnavi.ru" port="22" accessType="SFTP" password="dfebdfd8dfc8df9adf9adfd0df98df9adf98df9b" username="mazhuravlev">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

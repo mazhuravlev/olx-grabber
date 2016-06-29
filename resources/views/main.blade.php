@@ -2,7 +2,6 @@
         <!doctype html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <body>
 <p>Объявлений в базе: {{ $statistics->offerCount() }}</p>
@@ -13,6 +12,9 @@
         window.location = '/offer/olx_id/' + id;
     }
 </script>
+<script src="/js/jquery-2.2.0.min.js"></script>
+<script src="/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="/css/select2.min.css">
 <ul>
     <li><a href="/offers">Offers</a></li>
     <li><a href="/phones">Phones</a></li>

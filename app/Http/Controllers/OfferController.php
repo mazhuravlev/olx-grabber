@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class OfferController extends Controller
 {
@@ -24,6 +26,7 @@ class OfferController extends Controller
             return view('offer')->with(
                 [
                     'offer' => $offer,
+                    'locations' => Location::all(),
                 ]
             );
         } else {
@@ -31,11 +34,22 @@ class OfferController extends Controller
         }
     }
 
+    function setOfferLocation(Offer $offer)
+    {
+        $location = Location::findOrFail(Input::get('location_id'));
+        $offer->location()->associate($location);
+        $offer->save();
+        return view('offer_location_changed')->with([
+            'offer' => $offer,
+        ]);
+    }
+
     function offer($id)
     {
         return view('offer')->with(
             [
                 'offer' => Offer::findOrFail($id),
+                'locations' => Location::all(),
             ]
         );
     }

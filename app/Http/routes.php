@@ -7,6 +7,7 @@ Route::get('/offers', 'OfferController@index')->middleware(['web', 'auth']);
 Route::get('/offer/olx_id/{olxId}', 'OfferController@findByOlxId')->middleware(['web', 'auth']);
 Route::post('/offer/{offer}/export', 'ExportController@offer')->middleware(['web', 'auth']);
 Route::get('/offer/{id}', 'OfferController@offer')->middleware(['web', 'auth']);
+Route::post('/offer/{offer}/location', 'OfferController@setOfferLocation')->middleware(['web', 'auth']);
 Route::get('/phones', 'PhoneController@index')->middleware(['web', 'auth']);
 Route::get('/phones/invalid', 'PhoneController@invalid')->middleware(['web', 'auth']);
 Route::get('/phone/{id}', 'PhoneController@phone')->middleware(['web', 'auth']);

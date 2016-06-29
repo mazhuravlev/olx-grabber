@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.13 on 2016-02-03.
+ * Generated for Laravel 5.2.13 on 2016-06-29.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -2128,47 +2128,6 @@ namespace {
          */
         public static function getQueuedCookies(){
             return \Illuminate\Cookie\CookieJar::getQueuedCookies();
-        }
-        
-    }
-
-
-    class Crypt extends \Illuminate\Support\Facades\Crypt{
-        
-        /**
-         * Determine if the given key and cipher combination is valid.
-         *
-         * @param string $key
-         * @param string $cipher
-         * @return bool 
-         * @static 
-         */
-        public static function supported($key, $cipher){
-            return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
-        }
-        
-        /**
-         * Encrypt the given value.
-         *
-         * @param string $value
-         * @return string 
-         * @throws \Illuminate\Contracts\Encryption\EncryptException
-         * @static 
-         */
-        public static function encrypt($value){
-            return \Illuminate\Encryption\Encrypter::encrypt($value);
-        }
-        
-        /**
-         * Decrypt the given value.
-         *
-         * @param string $payload
-         * @return string 
-         * @throws \Illuminate\Contracts\Encryption\DecryptException
-         * @static 
-         */
-        public static function decrypt($payload){
-            return \Illuminate\Encryption\Encrypter::decrypt($payload);
         }
         
     }
@@ -5953,125 +5912,6 @@ namespace {
             return \Illuminate\Queue\QueueManager::isDownForMaintenance();
         }
         
-        /**
-         * Push a new job onto the queue.
-         *
-         * @param string $job
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @throws \Exception|\Throwable
-         * @static 
-         */
-        public static function push($job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
-        }
-        
-        /**
-         * Push a raw payload onto the queue.
-         *
-         * @param string $payload
-         * @param string $queue
-         * @param array $options
-         * @return mixed 
-         * @static 
-         */
-        public static function pushRaw($payload, $queue = null, $options = array()){
-            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
-        }
-        
-        /**
-         * Push a new job onto the queue after a delay.
-         *
-         * @param \DateTime|int $delay
-         * @param string $job
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function later($delay, $job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
-        }
-        
-        /**
-         * Pop the next job off of the queue.
-         *
-         * @param string $queue
-         * @return \Illuminate\Contracts\Queue\Job|null 
-         * @static 
-         */
-        public static function pop($queue = null){
-            return \Illuminate\Queue\SyncQueue::pop($queue);
-        }
-        
-        /**
-         * Push a new job onto the queue.
-         *
-         * @param string $queue
-         * @param string $job
-         * @param mixed $data
-         * @return mixed 
-         * @static 
-         */
-        public static function pushOn($queue, $job, $data = ''){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
-        }
-        
-        /**
-         * Push a new job onto the queue after a delay.
-         *
-         * @param string $queue
-         * @param \DateTime|int $delay
-         * @param string $job
-         * @param mixed $data
-         * @return mixed 
-         * @static 
-         */
-        public static function laterOn($queue, $delay, $job, $data = ''){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
-        }
-        
-        /**
-         * Push an array of jobs onto the queue.
-         *
-         * @param array $jobs
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function bulk($jobs, $data = '', $queue = null){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
-        }
-        
-        /**
-         * Set the IoC container instance.
-         *
-         * @param \Illuminate\Container\Container $container
-         * @return void 
-         * @static 
-         */
-        public static function setContainer($container){
-            //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setContainer($container);
-        }
-        
-        /**
-         * Set the encrypter instance.
-         *
-         * @param \Illuminate\Contracts\Encryption\Encrypter $crypt
-         * @return void 
-         * @static 
-         */
-        public static function setEncrypter($crypt){
-            //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
-        }
-        
     }
 
 
@@ -6227,6 +6067,66 @@ namespace {
          */
         public static function setSession($session){
             \Illuminate\Routing\Redirector::setSession($session);
+        }
+
+    }
+
+
+    class Redis extends \Illuminate\Support\Facades\Redis
+    {
+
+        /**
+         * Get a specific Redis connection instance.
+         *
+         * @param string $name
+         * @return \Predis\ClientInterface|null
+         * @static
+         */
+        public static function connection($name = 'default')
+        {
+            return \Illuminate\Redis\Database::connection($name);
+        }
+
+        /**
+         * Run a command against the Redis database.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed
+         * @static
+         */
+        public static function command($method, $parameters = array())
+        {
+            return \Illuminate\Redis\Database::command($method, $parameters);
+        }
+
+        /**
+         * Subscribe to a set of given channels for messages.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @param string $method
+         * @return void
+         * @static
+         */
+        public static function subscribe($channels, $callback, $connection = null, $method = 'subscribe')
+        {
+            \Illuminate\Redis\Database::subscribe($channels, $callback, $connection, $method);
+        }
+
+        /**
+         * Subscribe to a set of given channels with wildcards.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @return void
+         * @static
+         */
+        public static function psubscribe($channels, $callback, $connection = null)
+        {
+            \Illuminate\Redis\Database::psubscribe($channels, $callback, $connection);
         }
         
     }
